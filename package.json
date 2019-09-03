@@ -1,0 +1,78 @@
+{
+  "name": "@lenne.tech/cli-starter",
+  "version": "0.0.1",
+  "description": "lenne.Tech CLI Starter",
+  "keywords": [
+    "lenne.Tech",
+    "cli",
+    "lt"
+  ],
+  "author": "Pascal Klesse",
+  "homepage": "https://lenne.tech",
+  "license": "MIT",
+  "bin": {
+    "cli-starter": "bin/cli-starter"
+  },
+  "scripts": {
+    "start": "bin/lt",
+    "start:build": "npm run build && bin/lt --compiled-build",
+    "start:compiled": "bin/lt --compiled-build",
+    "format": "prettier --write 'src/**/*.{js,ts,tsx,json}' '!src/templates/**/*'",
+    "lint": "tslint -p .",
+    "clean-build": "rimraf ./build",
+    "compile": "tsc -p .",
+    "copy-templates": "if [ -e ./src/templates ]; then cp -a ./src/templates ./build/; fi",
+    "build": "npm run lint && npm run test && npm run clean-build && npm run compile && npm run copy-templates",
+    "test": "jest --testTimeout=60000",
+    "watch": "jest --watch",
+    "snapupdate": "jest --updateSnapshot",
+    "coverage": "jest --coverage",
+    "prepublishOnly": "npm run build",
+    "preversion": "npm run lint"
+  },
+  "files": [
+    "tsconfig.json",
+    "tslint.json",
+    "build",
+    "LICENSE",
+    "readme.md",
+    "docs",
+    "bin"
+  ],
+  "dependencies": {
+    "@lenne.tech/cli-helper": "file:../cli-helper",
+    "find-file-up": "2.0.1",
+    "gluegun": "3.3.4",
+    "open": "6.4.0",
+    "rimraf": "3.0.0",
+    "ts-node": "8.3.0",
+    "typescript": "3.6.2"
+  },
+  "devDependencies": {
+    "@lenne.tech/npm-package-helper": "0.0.9",
+    "@types/jest": "24.0.18",
+    "@types/node": "12.7.3",
+    "husky": "3.0.4",
+    "jest": "24.9.0",
+    "prettier": "1.18.2",
+    "pretty-quick": "1.11.1",
+    "ts-jest": "24.0.2",
+    "tslint": "5.19.0",
+    "tslint-config-prettier": "1.18.0",
+    "tslint-config-standard": "8.0.1"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "ts-node --skip-project extras/sync-version.ts && pretty-quick --staged",
+      "pre-push": "npm run lint && npm run test"
+    }
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true
+  }
+}
