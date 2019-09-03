@@ -1,4 +1,3 @@
-import { UpdateHelper } from './../extensions/updateHelper';
 import { MyFirstExtension } from './../extensions/cli-extension';
 import { IHelperExtendedGluegunToolbox } from '@lenne.tech/cli-helper/src';
 
@@ -7,6 +6,5 @@ import { IHelperExtendedGluegunToolbox } from '@lenne.tech/cli-helper/src';
  */
 export interface ExtendedGluegunToolbox extends IHelperExtendedGluegunToolbox {
   firstExtension: MyFirstExtension;
-  updateHelper: UpdateHelper;
   // add more extensions
 }
