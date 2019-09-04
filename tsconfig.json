@@ -23,7 +23,9 @@
     "target": "es6",
     "resolveJsonModule": true,
     "paths": {
-      "@lenne.tech/cli-helper": ["node_modules/@lenne.tech/cli-helper/dist/*"]
+      "@lenne.tech/cli-helper": [
+        "node_modules/@lenne.tech/cli-plugin-helper/dist/*"
+      ]
     }
   },
   "include": ["src/**/*"],

@@ -10,7 +10,7 @@ async function run(argv) {
       .brand('cli-starter')
       .src(__dirname)
       // .plugins('./node_modules', { matching: 'cli-starter-*', hidden: true })
-      .plugin('./node_modules/@lenne.tech/cli-helper/dist', {
+      .plugin('./node_modules/@lenne.tech/cli-plugin-helper/dist', {
         extensionFilePattern: '*.js',
         commandFilePattern: '*.js'
       })
