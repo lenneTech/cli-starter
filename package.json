@@ -5,46 +5,55 @@
   "keywords": [
     "lenne.Tech",
     "cli",
-    "lt"
+    "starter"
   ],
   "author": "Pascal Klesse",
+  "contributors": [
+    "Pascal Klesse",
+    "Kai Haase <kai.haase@lenne.tech> (http://lenne.tech)"
+  ],
   "homepage": "https://lenne.tech",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lenneTech/cli-starter"
+  },
+  "bugs": {
+    "url": "https://github.com/lenneTech/cli-starter/issues"
+  },
   "bin": {
     "cli-starter": "bin/cli-starter"
   },
   "scripts": {
-    "start": "bin/lt",
-    "start:build": "npm run build && bin/lt --compiled-build",
-    "start:compiled": "bin/lt --compiled-build",
-    "format": "prettier --write 'src/**/*.{js,ts,tsx,json}' '!src/templates/**/*'",
-    "lint": "tslint -p .",
+    "start": "node bin/cli-starter",
+    "start:build": "npm run build && node bin/cli-starter --compiled-build",
+    "start:compiled": "node bin/cli-starter --compiled-build",
+    "build": "npm run lint && npm run test && npm run clean-build && npm run compile && npm run copy-templates",
     "clean-build": "rimraf ./build",
     "compile": "tsc -p .",
-    "copy-templates": "if [ -e ./src/templates ]; then cp -a ./src/templates ./build/; fi",
-    "build": "npm run lint && npm run test && npm run clean-build && npm run compile && npm run copy-templates",
-    "test": "jest --testTimeout=60000",
-    "watch": "jest --watch",
-    "snapupdate": "jest --updateSnapshot",
+    "copy-templates": "path-exists ./src/templates && rimraf ./build/templates && cpy --parents --cwd=./src  templates/**/* ../build || echo 'No templates to copy'",
     "coverage": "jest --coverage",
+    "format": "prettier --write 'src/**/*.{js,ts,tsx,json}' '!src/templates/**/*'",
+    "lint": "tslint -p .",
     "prepublishOnly": "npm run build",
-    "preversion": "npm run lint"
+    "preversion": "npm run lint",
+    "rename": "ts-node extras/rename/rename.ts",
+    "snapupdate": "jest --updateSnapshot",
+    "test": "jest --testTimeout=60000",
+    "watch": "jest --watch"
   },
   "files": [
     "tsconfig.json",
     "tslint.json",
     "build",
     "LICENSE",
-    "readme.md",
+    "README.md",
     "docs",
     "bin"
   ],
   "dependencies": {
     "@lenne.tech/cli-plugin-helper": "latest",
-    "find-file-up": "2.0.1",
     "gluegun": "3.3.4",
-    "open": "6.4.0",
-    "rimraf": "3.0.0",
     "ts-node": "8.3.0",
     "typescript": "3.6.2"
   },
@@ -52,10 +61,13 @@
     "@lenne.tech/npm-package-helper": "latest",
     "@types/jest": "24.0.18",
     "@types/node": "12.7.4",
+    "cpy-cli": "2.0.0",
     "husky": "3.0.5",
     "jest": "24.9.0",
+    "path-exists-cli": "1.0.0",
     "prettier": "1.18.2",
     "pretty-quick": "1.11.1",
+    "rimraf": "3.0.0",
     "ts-jest": "24.0.2",
     "tslint": "5.19.0",
     "tslint-config-prettier": "1.18.0",
@@ -70,9 +82,5 @@
       "pre-commit": "ts-node --skip-project extras/sync-version.ts && pretty-quick --staged",
       "pre-push": "npm run lint && npm run test"
     }
-  },
-  "prettier": {
-    "semi": false,
-    "singleQuote": true
   }
 }

@@ -1,4 +1,4 @@
-import { MyFirstExtension } from './../extensions/cli-extension'
+import { MyFirstExtension } from '../extensions/my-first-extension'
 import { IHelperExtendedGluegunToolbox } from '@lenne.tech/cli-plugin-helper/src'
 
 /**
