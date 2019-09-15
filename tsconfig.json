@@ -21,12 +21,7 @@
     "outDir": "build",
     "strict": false,
     "target": "es6",
-    "resolveJsonModule": true,
-    "paths": {
-      "@lenne.tech/cli-helper": [
-        "node_modules/@lenne.tech/cli-plugin-helper/dist/*"
-      ]
-    }
+    "resolveJsonModule": true
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "src/templates/**/*"]

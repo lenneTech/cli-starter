@@ -1,5 +1,4 @@
-import { ExtendedGluegunToolbox } from './../interfaces/extended-gluegun-toolbox';
-
+import { ExtendedGluegunToolbox } from './../interfaces/extended-gluegun-toolbox'
 
 /**
  * MyFirstExtension
@@ -16,7 +15,7 @@ export class MyFirstExtension {
    */
   public async runExtension() {
     const {
-      print: { success },
+      print: { success }
     } = this.toolbox
 
     success('Your first extension is very nice 👏')
@@ -26,6 +25,6 @@ export class MyFirstExtension {
 /**
  * Extend MyFirstExtension
  */
- export default (toolbox: ExtendedGluegunToolbox) => {
+export default (toolbox: ExtendedGluegunToolbox) => {
   toolbox.myExtension = new MyFirstExtension(toolbox)
 }
