@@ -1,4 +1,5 @@
 const { build } = require('gluegun')
+import { join } from 'path'
 
 /**
  * Create the cli and kick it off
@@ -10,10 +11,20 @@ async function run(argv) {
       .brand('cli-starter')
       .src(__dirname)
       // .plugins('./node_modules', { matching: 'cli-starter-*', hidden: true })
-      .plugin('./node_modules/@lenne.tech/cli-plugin-helper/dist', {
-        extensionFilePattern: '*.js',
-        commandFilePattern: '*.js'
-      })
+      .plugin(
+        join(
+          __dirname,
+          '..',
+          'node_modules',
+          '@lenne.tech',
+          'cli-plugin-helper',
+          'dist'
+        ),
+        {
+          commandFilePattern: ['*.js'],
+          extensionFilePattern: ['*.js']
+        }
+      )
       .help() // provides default for help, h, --help, -h
       .version() // provides default for version, v, --version, -v
       .create()
