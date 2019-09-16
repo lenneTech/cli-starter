@@ -1,6 +1,6 @@
 {
   "name": "@lenne.tech/cli-starter",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "lenne.Tech CLI Starter",
   "keywords": [
     "lenne.Tech",
@@ -75,7 +75,8 @@
   },
   "jest": {
     "preset": "ts-jest",
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "rootDir": "__tests__"
   },
   "husky": {
     "hooks": {
