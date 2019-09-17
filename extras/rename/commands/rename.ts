@@ -85,6 +85,11 @@ module.exports = {
     }
     newPackageData.bin[nameKebab] = 'bin/' + nameKebab
     await npm.setPackageJson(newPackageData)
+    await patch(rootPath + 'package.json', {
+      insert: nameKebab,
+      replace: new RegExp(packageName, 'g'),
+      force: true
+    })
 
     // Update package-lock.json
     const packageLockPath = rootPath + '/package-lock.json'
