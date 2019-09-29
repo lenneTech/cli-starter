@@ -25,9 +25,6 @@
     "cli-starter": "bin/cli-starter"
   },
   "scripts": {
-    "start": "node bin/cli-starter",
-    "start:build": "npm run build && node bin/cli-starter --compiled-build",
-    "start:compiled": "node bin/cli-starter --compiled-build",
     "build": "npm run lint && npm run test && npm run clean-build && npm run compile && npm run copy-templates",
     "clean-build": "rimraf ./build",
     "compile": "tsc -p .",
@@ -39,6 +36,9 @@
     "preversion": "npm run lint",
     "rename": "ts-node extras/rename/rename.ts",
     "snapupdate": "jest --updateSnapshot",
+    "start": "node bin/cli-starter",
+    "start:build": "npm run build && node bin/cli-starter --compiled-build",
+    "start:compiled": "node bin/cli-starter --compiled-build",
     "test": "jest --testTimeout=60000",
     "watch": "jest --watch"
   },

@@ -1,4 +1,4 @@
-import { ExtendedGluegunToolbox } from '../interfaces/extended-gluegun-toolbox'
+import { ExtendedGluegunToolbox } from '../interfaces/extended-gluegun-toolbox';
 
 /**
  * Welcome to your CLI
@@ -8,11 +8,11 @@ module.exports = {
   description: 'Welcome to CLI-Starter project!',
   hidden: true,
   run: async (toolbox: ExtendedGluegunToolbox) => {
-    const { helper } = toolbox
+    const { helper } = toolbox;
     await helper.commandSelector(toolbox, {
       level: 0,
       welcome: 'Welcome to CLI-Starter project ' + toolbox.meta.version()
-    })
-    return 'cli-starter'
+    });
+    return 'cli-starter';
   }
-}
+};
