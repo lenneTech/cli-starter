@@ -8,10 +8,8 @@ module.exports = {
   description: 'Welcome to CLI-Starter project!',
   hidden: true,
   run: async (toolbox: ExtendedGluegunToolbox) => {
-    const { helper } = toolbox;
-    await helper.commandSelector(toolbox, {
-      level: 0,
-      welcome: 'Welcome to CLI-Starter project ' + toolbox.meta.version()
+    await toolbox.helper.showMenu(null, {
+      headline: 'Welcome to CLI-Starter project ' + toolbox.meta.version()
     });
     return 'cli-starter';
   }
