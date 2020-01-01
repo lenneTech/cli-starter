@@ -1,9 +1,9 @@
-import { IHelperExtendedGluegunToolbox } from '@lenne.tech/cli-plugin-helper/src/interfaces/extended-gluegun-toolbox.interface'
-import { rename as renameOrg } from 'fs'
-import { dirname } from 'path'
-import { promisify } from 'util'
+import { IHelperExtendedGluegunToolbox } from '@lenne.tech/cli-plugin-helper/src/interfaces/extended-gluegun-toolbox.interface';
+import { rename as renameOrg } from 'fs';
+import { dirname } from 'path';
+import { promisify } from 'util';
 
-const rename = promisify(renameOrg)
+const rename = promisify(renameOrg);
 
 /**
  * Rename files and data of cli starter
@@ -23,46 +23,46 @@ module.exports = {
       prompt: { ask },
       strings: { kebabCase },
       system: { run, startTimer }
-    } = toolbox
+    } = toolbox;
 
     // Get project name
     const name = await helper.getInput(params.first, {
       name: 'Project name',
       showError: true
-    })
+    });
     if (!name) {
-      return
+      return;
     }
 
     // Get author
     const author = await helper.getInput(params.options.author, {
       name: 'Author',
       showError: true
-    })
+    });
 
     // Link
-    let link = params.options.link && !params.options.nolink
+    let link = params.options.link && !params.options.nolink;
     if (!params.options.link && !params.options.nolink) {
       link = !!(await ask({
         type: 'confirm',
         name: 'link',
         message: 'Link when finished?'
-      })).link
+      })).link;
     }
 
     // Start timer and spinner
-    const timer = startTimer()
-    const spinner = spin('Rename files and data')
+    const timer = startTimer();
+    const spinner = spin('Rename files and data');
 
     // Set up different spellings
-    const nameKebab = kebabCase(name) // kebab-case
+    const nameKebab = kebabCase(name); // kebab-case
 
     // Get package.json
-    const { path: packagePath, data: packageData } = await npm.getPackageJson()
-    const rootPath = dirname(packagePath)
+    const { path: packagePath, data: packageData } = await npm.getPackageJson();
+    const rootPath = dirname(packagePath);
 
     // Get original package name
-    const packageName = packageData.name.replace(/^.*\//, '')
+    const packageName = packageData.name.replace(/^.*\//, '');
 
     // Set data for package.json
     const newPackageData = {
@@ -82,93 +82,84 @@ module.exports = {
         url: ''
       },
       bin: {}
+    };
+    newPackageData.bin[nameKebab] = 'bin/' + nameKebab;
+    for (let [key, value] of Object.entries(newPackageData.scripts)) {
+      newPackageData.scripts[key] = (value as string).replace(
+        new RegExp('bin/' + packageName, 'g'),
+        'bin/' + nameKebab
+      );
     }
-    newPackageData.bin[nameKebab] = 'bin/' + nameKebab
-    await npm.setPackageJson(newPackageData)
-    await patch(rootPath + 'package.json', {
-      insert: nameKebab,
-      replace: new RegExp(packageName, 'g'),
-      force: true
-    })
+    await npm.setPackageJson(newPackageData);
 
     // Update package-lock.json
-    const packageLockPath = rootPath + '/package-lock.json'
-    await update(packageLockPath, data => {
-      data.name = nameKebab
-      data.version = '0.0.1'
-      return data
-    })
+    const packageLockPath = rootPath + '/package-lock.json';
+    await update(packageLockPath, (data) => {
+      data.name = nameKebab;
+      data.version = '0.0.1';
+      return data;
+    });
 
     // Patch tests
     await patch(rootPath + '/__tests__/cli.test.ts', {
       insert: nameKebab,
       replace: new RegExp(packageName, 'g'),
       force: true
-    })
+    });
 
     // Rename bin
-    await rename(
-      rootPath + '/bin/' + packageName,
-      rootPath + '/bin/' + nameKebab
-    )
+    await rename(rootPath + '/bin/' + packageName, rootPath + '/bin/' + nameKebab);
 
     // Patch docs
     await patch(rootPath + '/docs/commands.md', {
       insert: name,
       replace: new RegExp(packageName, 'g'),
       force: true
-    })
+    });
     await patch(rootPath + '/docs/plugins.md', {
       insert: name,
       replace: new RegExp(packageName, 'g'),
       force: true
-    })
+    });
 
     // Patch CLI
     await patch(rootPath + '/src/cli.ts', {
       insert: nameKebab,
       replace: new RegExp(packageName, 'g'),
       force: true
-    })
+    });
 
     // Patch and rename commands
-    let showCommandsInfo = false
+    let showCommandsInfo = false;
     try {
       await patch(rootPath + '/src/commands/' + packageName + '.ts', {
         insert: nameKebab,
         replace: new RegExp(packageName, 'g'),
         force: true
-      })
+      });
       await patch(rootPath + '/src/commands/' + packageName + '.ts', {
         insert: name,
         replace: new RegExp('CLI-Starter project', 'g'),
         force: true
-      })
-      await rename(
-        rootPath + '/src/commands/' + packageName + '.ts',
-        rootPath + '/src/commands/' + nameKebab + '.ts'
-      )
+      });
+      await rename(rootPath + '/src/commands/' + packageName + '.ts', rootPath + '/src/commands/' + nameKebab + '.ts');
     } catch (e) {
-      showCommandsInfo = true
+      showCommandsInfo = true;
     }
 
     // Link
     if (link) {
-      await run(`cd ${rootPath} && npm run build && npm link`)
+      await run(`cd ${rootPath} && npm run build && npm link`);
     }
 
     // Success info
-    spinner.succeed()
-    success(
-      `Renamed${link ? ' and linked' : ''} in ${helper.msToMinutesAndSeconds(
-        timer()
-      )}m.`
-    )
+    spinner.succeed();
+    success(`Renamed${link ? ' and linked' : ''} in ${helper.msToMinutesAndSeconds(timer())}m.`);
     if (showCommandsInfo) {
-      info('Commands could not be adjusted!')
+      info('Commands could not be adjusted!');
     }
-    info('Please remember to customize the README.md.')
+    info('Please remember to customize the README.md.');
 
-    return 'rename'
+    return 'rename';
   }
-}
+};
