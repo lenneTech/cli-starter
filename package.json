@@ -1,6 +1,6 @@
 {
   "name": "@lenne.tech/cli-starter",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "lenne.Tech CLI Starter",
   "keywords": [
     "lenne.Tech",
@@ -52,10 +52,10 @@
     "bin"
   ],
   "dependencies": {
-    "@lenne.tech/cli-plugin-helper": "0.0.5",
-    "gluegun": "4.0.1",
-    "ts-node": "8.4.1",
-    "typescript": "3.6.3"
+    "@lenne.tech/cli-plugin-helper": "0.0.8",
+    "gluegun": "4.1.2",
+    "ts-node": "8.5.4",
+    "typescript": "3.7.4"
   },
   "devDependencies": {
     "@lenne.tech/npm-package-helper": "latest",
