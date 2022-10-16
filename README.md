@@ -50,7 +50,7 @@ $ npm lint
 $ npm test
 (if typescript, run `npm run build` here)
 $ npm publish
-(if you are publish a plublic package for the first time: npm publish --access public)
+(if you are publish a public package for the first time: npm publish --access public)
 ```
 
 # License
